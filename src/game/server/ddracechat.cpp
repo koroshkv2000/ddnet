@@ -14,15 +14,16 @@ bool CheckClientID(int ClientID);
 void CGameContext::ConSoloCmd(IConsole::IResult *pResult, void *pUserData)
 {
 
-	// solo part
-	if(((m_TileIndex == TILE_SOLO_ENABLE) || (m_TileFIndex == TILE_SOLO_ENABLE)) && !TeamsCore()->GetSolo(GetCID()))
-	{
-		SetSolo(true);
-	}
-	else if(((m_TileIndex == TILE_SOLO_DISABLE) || (m_TileFIndex == TILE_SOLO_DISABLE)) && TeamsCore()->GetSolo(GetCID()))
-	{
-		SetSolo(false);
-	}
+	CGameContext *pSelf = (CGameContext *)pUserData;
+//	if(!m_Teams.m_Core.GetSolo(ClientID)){
+//
+//	}
+	int ClientID = pResult->m_ClientID;
+	if(!CheckClientID(pResult->m_ClientID))
+		return;
+	CCharacter *pChr = pSelf->GetPlayerChar(pResult->m_ClientID);
+	if(pChr)
+		pChr->SetSolo(true);
 
 }
 void CGameContext::ConCredits(IConsole::IResult *pResult, void *pUserData)
