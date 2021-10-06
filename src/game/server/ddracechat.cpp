@@ -13,15 +13,16 @@
 bool CheckClientID(int ClientID);
 void CGameContext::ConSoloCmd(IConsole::IResult *pResult, void *pUserData)
 {
-	CGameContext *pSelf = (CGameContext *)pUserData;
 
-
-//		CCharacter *pChr = cPlayer->GetCharacter();
-//
-////		GameServer()->SendChatTarget(ClientID, "You are now in a solo part");
-		pSelf->Console()->Print(IConsole::OUTPUT_LEVEL_STANDARD, "help",
-			"/cmdlist will show a list of all chat commands");
-//		pChr->SetSolo(true);
+	// solo part
+	if(((m_TileIndex == TILE_SOLO_ENABLE) || (m_TileFIndex == TILE_SOLO_ENABLE)) && !TeamsCore()->GetSolo(GetCID()))
+	{
+		SetSolo(true);
+	}
+	else if(((m_TileIndex == TILE_SOLO_DISABLE) || (m_TileFIndex == TILE_SOLO_DISABLE)) && TeamsCore()->GetSolo(GetCID()))
+	{
+		SetSolo(false);
+	}
 
 }
 void CGameContext::ConCredits(IConsole::IResult *pResult, void *pUserData)
