@@ -15,15 +15,22 @@ void CGameContext::ConSoloCmd(IConsole::IResult *pResult, void *pUserData)
 {
 
 	CGameContext *pSelf = (CGameContext *)pUserData;
-//	if(!m_Teams.m_Core.GetSolo(ClientID)){
-//
-//	}
 	int ClientID = pResult->m_ClientID;
 	if(!CheckClientID(pResult->m_ClientID))
 		return;
 	CCharacter *pChr = pSelf->GetPlayerChar(pResult->m_ClientID);
-	if(pChr)
-		pChr->SetSolo(true);
+	if(pChr){
+		if(!m_Teams.m_Core.GetSolo(ClientID)){
+			pChr->SetSolo(true);
+			pSelf->Console()->Print(IConsole::OUTPUT_LEVEL_STANDARD, "help","solo");
+		}else{
+			pChr->SetSolo(false);
+			pSelf->Console()->Print(IConsole::OUTPUT_LEVEL_STANDARD, "help","unsolo");
+		}
+	}
+
+
+
 
 }
 void CGameContext::ConCredits(IConsole::IResult *pResult, void *pUserData)
