@@ -11,17 +11,17 @@
 #include "player.h"
 
 bool CheckClientID(int ClientID);
-void CGameContext::ConCredits(IConsole::IResult *pResult, void *pUserData)
+void CGameContext::ConSoloCmd(IConsole::IResult *pResult, void *pUserData)
 {
 	CGameContext *pSelf = (CGameContext *)pUserData;
 
 
-		CCharacter *pChr = pPlayer->GetCharacter();
+//		CCharacter *pChr = cPlayer->GetCharacter();
 //
 ////		GameServer()->SendChatTarget(ClientID, "You are now in a solo part");
-//		pSelf->Console()->Print(IConsole::OUTPUT_LEVEL_STANDARD, "help",
-//			"/cmdlist will show a list of all chat commands");
-		pChr->SetSolo(true);
+		pSelf->Console()->Print(IConsole::OUTPUT_LEVEL_STANDARD, "help",
+			"/cmdlist will show a list of all chat commands");
+//		pChr->SetSolo(true);
 
 }
 void CGameContext::ConCredits(IConsole::IResult *pResult, void *pUserData)
