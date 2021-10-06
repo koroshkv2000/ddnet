@@ -20,7 +20,8 @@ void CGameContext::ConSoloCmd(IConsole::IResult *pResult, void *pUserData)
 		return;
 	CCharacter *pChr = pSelf->GetPlayerChar(pResult->m_ClientID);
 	if(pChr){
-		if(!m_Teams.m_Core.GetSolo(ClientID)){
+		CGameTeams &Teams = ((CGameControllerDDRace *)pSelf->m_pController)->m_Teams;
+		if(!Teams.m_Core.GetSolo(ClientID)){
 			pChr->SetSolo(true);
 			pSelf->Console()->Print(IConsole::OUTPUT_LEVEL_STANDARD, "help","solo");
 		}else{
