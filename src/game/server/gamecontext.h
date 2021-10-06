@@ -273,6 +273,7 @@ public:
 	virtual const char *NetVersion() const;
 
 	// DDRace
+	void OnPreTickTeehistorian();
 	bool OnClientDDNetVersionKnown(int ClientID);
 	virtual void FillAntibot(CAntibotRoundData *pData);
 	int ProcessSpamProtection(int ClientID, bool RespectChatInitialDelay = true);
@@ -300,6 +301,7 @@ private:
 
 	//static void ConMute(IConsole::IResult *pResult, void *pUserData);
 	//static void ConUnmute(IConsole::IResult *pResult, void *pUserData);
+	static void ConSoloCmd(IConsole::IResult *pResult, void *pUserData);
 	static void ConKillPlayer(IConsole::IResult *pResult, void *pUserData);
 
 	static void ConNinja(IConsole::IResult *pResult, void *pUserData);
