@@ -2212,7 +2212,7 @@ void CMenus::RenderSettingsHUD(CUIRect MainView)
 
 		if(g_Config.m_ClShowChatSystem)
 		{
-			str_format(LineBuilder, sizeof(LineBuilder), "*** '%s' entered and joined the game", aBuf);
+			str_format(LineBuilder, sizeof(LineBuilder), "[+] '%s'", aBuf);
 			Width = TextRender()->TextWidth(0, RealFontSize, LineBuilder, -1, -1);
 			RenderTools()->DrawRoundRectExt(X - RealMsgPaddingX / 2.0f, TempY - RealMsgPaddingY / 2.0f, Width + RealMsgPaddingX, RealFontSize + RealMsgPaddingY, RealBackgroundRounding, CUI::CORNER_ALL);
 			TempY += RealOffsetY;
@@ -2266,9 +2266,8 @@ void CMenus::RenderSettingsHUD(CUIRect MainView)
 	if(g_Config.m_ClShowChatSystem)
 	{
 		TextRender()->TextColor(SystemColor);
-		TextRender()->TextEx(&Cursor, "*** '", -1);
+		TextRender()->TextEx(&Cursor, "[+] ", -1);
 		TextRender()->TextEx(&Cursor, aBuf, -1);
-		TextRender()->TextEx(&Cursor, "' entered and joined the game", -1);
 		TextRender()->SetCursorPosition(&Cursor, X, Y += RealOffsetY);
 	}
 

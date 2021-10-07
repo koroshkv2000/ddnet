@@ -351,22 +351,22 @@ void CGameTeams::CheckTeamFinished(int Team)
 const char *CGameTeams::SetCharacterTeam(int ClientID, int Team)
 {
 	if(ClientID < 0 || ClientID >= MAX_CLIENTS)
-		return "Invalid client ID";
+		return "[!] Client ID NaMotabar!!!";
 	if(Team < 0 || Team >= MAX_CLIENTS + 1)
-		return "Invalid team number";
+		return "[!] Shomare Team Eshtbahst";
 	if(Team != TEAM_SUPER && m_TeamState[Team] > TEAMSTATE_OPEN)
-		return "This team started already";
+		return "[!] In Team Dar Hale Bazist";
 	if(m_Core.Team(ClientID) == Team)
-		return "You are in this team already";
+		return "[!] Shoma Gblan Dar In Team Join Shodeid";
 	if(!Character(ClientID))
-		return "Your character is not valid";
+		return "[!] character Shoma Eshtbah mibashad";
 	if(Team == TEAM_SUPER && !Character(ClientID)->m_Super)
-		return "You can't join super team if you don't have super rights";
+		return "[!] You can't join super team if you don't have super rights";
 	if(Team != TEAM_SUPER && Character(ClientID)->m_DDRaceState != DDRACE_NONE)
-		return "You have started racing already";
+		return "[!] You have started racing already";
 	// No cheating through noob filter with practice and then leaving team
 	if(m_Practice[m_Core.Team(ClientID)])
-		return "You have used practice mode already";
+		return "[!] Shoma Gblan Dakhel Practice Mode Shode Bodid";
 
 	// you can not join a team which is currently in the process of saving,
 	// because the save-process can fail and then the team is reset into the game
@@ -639,7 +639,7 @@ void CGameTeams::OnTeamFinish(CPlayer **Players, unsigned int Size, float Time, 
 		{
 			SetForceCharacterTeam(Players[i]->GetCID(), TEAM_FLOCK);
 			char aBuf[512];
-			str_format(aBuf, sizeof(aBuf), "%s joined team 0",
+			str_format(aBuf, sizeof(aBuf), "[+][Global] %s",
 				GameServer()->Server()->ClientName(Players[i]->GetCID()));
 			GameServer()->SendChat(-1, CGameContext::CHAT_ALL, aBuf);
 		}
@@ -694,16 +694,16 @@ void CGameTeams::OnFinish(CPlayer *Player, float Time, const char *pTimestamp)
 		if(Diff <= 0.005f)
 		{
 			GameServer()->SendChatTarget(ClientID,
-				"You finished with your best time.");
+				"Shoma Recoard Khod Ra Zadid");
 		}
 		else
 		{
 			if(Diff >= 60)
-				str_format(aBuf, sizeof(aBuf), "%d minute(s) %5.2f second(s) worse, better luck next time.",
+				str_format(aBuf, sizeof(aBuf), "%d Dagige %5.2f Sanie Omdvarim dafe badi Shans behtari Dashte Bashid.",
 					(int)Diff / 60, Diff - ((int)Diff / 60 * 60));
 			else
 				str_format(aBuf, sizeof(aBuf),
-					"%5.2f second(s) worse, better luck next time.",
+					"%5.2f Sanie Omdvarim dafe badi Shans behtari Dashte Bashid.",
 					Diff);
 			GameServer()->SendChatTarget(ClientID, aBuf, CGameContext::CHAT_SIX); // this is private, sent only to the tee
 		}

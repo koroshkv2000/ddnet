@@ -415,9 +415,9 @@ void IGameController::OnPlayerDisconnect(class CPlayer *pPlayer, const char *pRe
 	{
 		char aBuf[512];
 		if(pReason && *pReason)
-			str_format(aBuf, sizeof(aBuf), "'%s' has left the game (%s)", Server()->ClientName(ClientID), pReason);
+			str_format(aBuf, sizeof(aBuf), "[-] %s(%s)", Server()->ClientName(ClientID), pReason);
 		else
-			str_format(aBuf, sizeof(aBuf), "'%s' has left the game", Server()->ClientName(ClientID));
+			str_format(aBuf, sizeof(aBuf), "[-] %s", Server()->ClientName(ClientID));
 		GameServer()->SendChat(-1, CGameContext::CHAT_ALL, aBuf, -1, CGameContext::CHAT_SIX);
 
 		str_format(aBuf, sizeof(aBuf), "leave player='%d:%s'", ClientID, Server()->ClientName(ClientID));
@@ -739,7 +739,7 @@ void IGameController::DoTeamChange(CPlayer *pPlayer, int Team, bool DoChatMsg)
 	DoChatMsg = false;
 	if(DoChatMsg)
 	{
-		str_format(aBuf, sizeof(aBuf), "'%s' joined the %s", Server()->ClientName(ClientID), GameServer()->m_pController->GetTeamName(Team));
+		str_format(aBuf, sizeof(aBuf), " [+][Team %s] %s", Server()->ClientName(ClientID), GameServer()->m_pController->GetTeamName(Team));
 		GameServer()->SendChat(-1, CGameContext::CHAT_ALL, aBuf);
 	}
 
