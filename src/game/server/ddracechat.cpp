@@ -16,19 +16,31 @@ void CGameContext::ConSoloCmd(IConsole::IResult *pResult, void *pUserData)
 
 	CGameContext *pSelf = (CGameContext *)pUserData;
 	int ClientID = pResult->m_ClientID;
-	if(!CheckClientID(pResult->m_ClientID))
+	CCharacterCore *pCore;
+
+	CNetObj_Character *pCharacter = static_cast<CNetObj_Character *>(Server()->SnapNewItem(NETOBJTYPE_CHARACTER, ID, sizeof(CNetObj_Character)));
+	if(!pCharacter)
 		return;
-	CCharacter *pChr = pSelf->GetPlayerChar(pResult->m_ClientID);
-	if(pChr){
-		CGameTeams &Teams = ((CGameControllerDDRace *)pSelf->m_pController)->m_Teams;
-		if(!Teams.m_Core.GetSolo(ClientID)){
-			pChr->SetSolo(true);
-			pSelf->Console()->Print(IConsole::OUTPUT_LEVEL_STANDARD, "help","solo");
-		}else{
-			pChr->SetSolo(false);
-			pSelf->Console()->Print(IConsole::OUTPUT_LEVEL_STANDARD, "help","unsolo");
-		}
-	}
+
+	pCore->Write(pCharacter);
+
+	pCharacter->m_Health = 5;
+
+
+
+//	if(!CheckClientID(pResult->m_ClientID))
+//		return;
+//	CCharacter *pChr = pSelf->GetPlayerChar(pResult->m_ClientID);
+//	if(pChr){
+//		CGameTeams &Teams = ((CGameControllerDDRace *)pSelf->m_pController)->m_Teams;
+//		if(!Teams.m_Core.GetSolo(ClientID)){
+//			pChr->SetSolo(true);
+//			pSelf->Console()->Print(IConsole::OUTPUT_LEVEL_STANDARD, "help","solo");
+//		}else{
+//			pChr->SetSolo(false);
+//			pSelf->Console()->Print(IConsole::OUTPUT_LEVEL_STANDARD, "help","unsolo");
+//		}
+//	}
 
 
 
