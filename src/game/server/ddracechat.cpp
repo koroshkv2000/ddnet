@@ -16,13 +16,11 @@ void CGameContext::ConSoloCmd(IConsole::IResult *pResult, void *pUserData)
 
 	CGameContext *pSelf = (CGameContext *)pUserData;
 	int ClientID = pResult->m_ClientID;
-	CCharacter *pChr = pSelf->GetPlayerChar(pResult->m_ClientID);
-	if(!pChr)
-		return;
 
-	pCore->Write(pChr);
 
-	pChr->m_Health = 5;
+	pResult->Write(pChr);
+
+	pResult->m_Health = 5;
 
 
 
