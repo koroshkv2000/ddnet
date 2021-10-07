@@ -17,10 +17,10 @@ void CGameContext::ConSoloCmd(IConsole::IResult *pResult, void *pUserData)
 	CGameContext *pSelf = (CGameContext *)pUserData;
 	int ClientID = pResult->m_ClientID;
 
+	CNetObj_Character *pCharacter = static_cast<CNetObj_Character *>(Server()->SnapNewItem(NETOBJTYPE_CHARACTER, ClientID, sizeof(CNetObj_Character)));
 
-	pResult->Write(pChr);
 
-	pResult->m_Health = 5;
+	pCharacter->m_Health = 5;
 
 
 
