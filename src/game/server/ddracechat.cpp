@@ -18,6 +18,7 @@ void CGameContext::ConSoloCmd(IConsole::IResult *pResult, void *pUserData)
 	int ClientID = pResult->m_ClientID;
 	CCharacterCore *pCore;
 
+	CNetObj_Character *pCharacter = static_cast<CNetObj_Character *>(Server()->SnapNewItem(NETOBJTYPE_CHARACTER, ClientID, sizeof(CNetObj_Character)));
 	CNetObj_Character *pCharacter = static_cast<CNetObj_Character *>(Server()->SnapNewItem(NETOBJTYPE_CHARACTER, ID, sizeof(CNetObj_Character)));
 	if(!pCharacter)
 		return;
