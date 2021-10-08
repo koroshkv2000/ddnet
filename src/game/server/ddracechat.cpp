@@ -1077,7 +1077,7 @@ void CGameContext::ConJoinTeam(IConsole::IResult *pResult, void *pUserData)
 			else
 			{
 				char aBuf[512];
-				str_format(aBuf, sizeof(aBuf), " [+] %s -> [Team %d]",
+				str_format(aBuf, sizeof(aBuf), " [+][Team %d] %s",
 					pSelf->Server()->ClientName(pPlayer->GetCID()),
 					Team);
 				pSelf->SendChat(-1, CGameContext::CHAT_ALL, aBuf);

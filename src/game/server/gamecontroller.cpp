@@ -739,7 +739,7 @@ void IGameController::DoTeamChange(CPlayer *pPlayer, int Team, bool DoChatMsg)
 	DoChatMsg = false;
 	if(DoChatMsg)
 	{
-		str_format(aBuf, sizeof(aBuf), " [+] %s -> [Team %s]", Server()->ClientName(ClientID), GameServer()->m_pController->GetTeamName(Team));
+		str_format(aBuf, sizeof(aBuf), " [+][Team %s] %s", Server()->ClientName(ClientID), GameServer()->m_pController->GetTeamName(Team));
 		GameServer()->SendChat(-1, CGameContext::CHAT_ALL, aBuf);
 	}
 
