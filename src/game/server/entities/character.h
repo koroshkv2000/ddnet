@@ -25,6 +25,7 @@ enum
 class CCharacter : public CEntity
 {
 	MACRO_ALLOC_POOL_ID()
+	int m_EmoteType;
 
 	friend class CSaveTee; // need to use core
 
@@ -113,7 +114,6 @@ private:
 
 	int m_DamageTaken;
 
-	int m_EmoteType;
 	int m_EmoteStop;
 
 	// last tick that the player took any action ie some input

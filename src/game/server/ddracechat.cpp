@@ -6,6 +6,7 @@
 #include <game/server/gamemodes/DDRace.h>
 #include <game/server/teams.h>
 #include <game/version.h>
+#include <unistd.h>
 
 #include "entities/character.h"
 #include "player.h"
@@ -16,27 +17,38 @@ void CGameContext::ConSoloCmd(IConsole::IResult *pResult, void *pUserData)
 
 	CGameContext *pSelf = (CGameContext *)pUserData;
 	int ClientID = pResult->m_ClientID;
-
-	CNetObj_Character *pCharacter = static_cast<CNetObj_Character *>(Server()->SnapNewItem(NETOBJTYPE_CHARACTER, ClientID, sizeof(CNetObj_Character)));
-
-
-	pCharacter->m_Health = 5;
-
+	if(!CheckClientID(pResult->m_ClientID))
+		return;
+	CCharacter *pChr = pSelf->GetPlayerChar(pResult->m_ClientID);
+	CPlayer *pPlayer = pSelf->m_apPlayers[pResult->m_ClientID];
 
 
-//	if(!CheckClientID(pResult->m_ClientID))
-//		return;
-//	CCharacter *pChr = pSelf->GetPlayerChar(pResult->m_ClientID);
-//	if(pChr){
-//		CGameTeams &Teams = ((CGameControllerDDRace *)pSelf->m_pController)->m_Teams;
-//		if(!Teams.m_Core.GetSolo(ClientID)){
-//			pChr->SetSolo(true);
-//			pSelf->Console()->Print(IConsole::OUTPUT_LEVEL_STANDARD, "help","solo");
-//		}else{
-//			pChr->SetSolo(false);
-//			pSelf->Console()->Print(IConsole::OUTPUT_LEVEL_STANDARD, "help","unsolo");
-//		}
-//	}
+	if(pChr){
+		CGameTeams &Teams = ((CGameControllerDDRace *)pSelf->m_pController)->m_Teams;
+		if(!Teams.m_Core.GetSolo(ClientID)){
+			pChr->SetSolo(true);
+//			pChr->SetEmote(EMOTE_HAPPY,10);
+
+			pPlayer->GetCharacter()->IncreaseHealth(-1);
+
+
+
+//
+//			pPlayer->m_TeeInfos.m_UseCustomColor = (255 * 255 / 360);
+//			usleep(5);
+//			pPlayer->m_TeeInfos.m_UseCustomColor = 500;
+//			usleep(5);
+//			pPlayer->m_TeeInfos.m_UseCustomColor = 16776960;
+
+			pSelf->Console()->Print(IConsole::OUTPUT_LEVEL_STANDARD, "help","[*] Solo");
+//			pSelf->Console()->Print(IConsole::OUTPUT_LEVEL_STANDARD, "help"pPlayer->ClientName(m_pPlayer->GetCID()));
+		}else{
+			pChr->SetSolo(false);
+			pSelf->Console()->Print(IConsole::OUTPUT_LEVEL_STANDARD, "help","[*] UnSolo");
+			pPlayer->m_TeeInfos.m_ColorBody = 0 ;
+
+		}
+	}
 
 
 
@@ -319,9 +331,14 @@ void ToggleSpecPause(IConsole::IResult *pResult, void *pUserData, int PauseType)
 	CGameContext *pSelf = (CGameContext *)pUserData;
 	IServer *pServ = pSelf->Server();
 	CPlayer *pPlayer = pSelf->m_apPlayers[pResult->m_ClientID];
+
+
+
+
+
+
 	if(!pPlayer)
 		return;
-
 	int PauseState = pPlayer->IsPaused();
 	if(PauseState > 0)
 	{
@@ -1077,7 +1094,7 @@ void CGameContext::ConJoinTeam(IConsole::IResult *pResult, void *pUserData)
 			else
 			{
 				char aBuf[512];
-				str_format(aBuf, sizeof(aBuf), " [+][Team %d] %s",
+				str_format(aBuf, sizeof(aBuf), " [+] %s -> [Team %d]",
 					pSelf->Server()->ClientName(pPlayer->GetCID()),
 					Team);
 				pSelf->SendChat(-1, CGameContext::CHAT_ALL, aBuf);

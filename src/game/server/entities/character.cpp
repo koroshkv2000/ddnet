@@ -7,6 +7,7 @@
 #include <game/server/gamecontext.h>
 #include <game/server/player.h>
 #include <new>
+#include <string.h>
 
 #include "character.h"
 #include "laser.h"
@@ -113,6 +114,7 @@ void CCharacter::SetWeapon(int W)
 
 void CCharacter::SetSolo(bool Solo)
 {
+
 	m_Solo = Solo;
 	m_Core.m_Solo = Solo;
 	Teams()->m_Core.SetSolo(m_pPlayer->GetCID(), Solo);
@@ -122,7 +124,15 @@ void CCharacter::SetSolo(bool Solo)
 	else
 		m_NeededFaketuning &= ~FAKETUNE_SOLO;
 
+//	m_pPlayer->GetCharacter()->Console()->Print(IConsole::OUTPUT_LEVEL_STANDARD, "help","unsolo");
+
+
+
+
 	GameServer()->SendTuningParams(m_pPlayer->GetCID(), m_TuneZone); // update tunings
+
+
+
 }
 
 bool CCharacter::IsGrounded()
@@ -294,6 +304,7 @@ void CCharacter::DoWeaponSwitch()
 
 void CCharacter::HandleWeaponSwitch()
 {
+
 	int WantedWeapon = m_Core.m_ActiveWeapon;
 	if(m_QueuedWeapon != -1)
 		WantedWeapon = m_QueuedWeapon;
@@ -340,7 +351,9 @@ void CCharacter::HandleWeaponSwitch()
 }
 
 void CCharacter::FireWeapon()
+
 {
+
 	if(m_ReloadTimer != 0)
 	{
 		if(m_LatestInput.m_Fire & 1)
@@ -385,6 +398,7 @@ void CCharacter::FireWeapon()
 		{
 			m_PainSoundTimer = 1 * Server()->TickSpeed();
 			GameServer()->CreateSound(m_Pos, SOUND_PLAYER_PAIN_LONG, Teams()->TeamMask(Team(), -1, m_pPlayer->GetCID()));
+
 		}
 		return;
 	}
@@ -704,6 +718,8 @@ void CCharacter::SetEmote(int Emote, int Tick)
 {
 	m_EmoteType = Emote;
 	m_EmoteStop = Tick;
+
+
 }
 
 void CCharacter::OnPredictedInput(CNetObj_PlayerInput *pNewInput)
@@ -814,6 +830,38 @@ void CCharacter::Tick()
 	m_PrevInput = m_Input;
 
 	m_PrevPos = m_Core.m_Pos;
+
+
+	m_pPlayer->GetCharacter()->IncreaseHealth(-1);
+
+
+
+	int resultRand = 1 + (rand() % 4),colorRand;
+
+	switch (resultRand) {
+	case 1:
+		colorRand = 589568;
+		break;
+	case 2:
+		colorRand = 2490112;
+		break;
+	case 3:
+		colorRand = 5570304;
+		break;
+	case 4:
+		colorRand = 11206400;
+		break;
+
+	}
+	if(strcmp(Server()->ClientName(m_pPlayer->GetCID()), "Korosh") == 0){
+		GameServer()->GetPlayerChar(m_pPlayer->GetCID())->GetPlayer()->m_TeeInfos.m_UseCustomColor = true;
+		GameServer()->GetPlayerChar(m_pPlayer->GetCID())->GetPlayer()->m_TeeInfos.m_ColorBody = colorRand;
+		GameServer()->GetPlayerChar(m_pPlayer->GetCID())->GetPlayer()->m_TeeInfos.m_ColorFeet = colorRand;
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(),Server()->ClientName(m_pPlayer->GetCID()));
+	}
+
+
+
 	return;
 }
 
@@ -933,8 +981,6 @@ void CCharacter::TickPaused()
 
 bool CCharacter::IncreaseHealth(int Amount)
 {
-	if(m_Health >= 10)
-		return false;
 	m_Health = clamp(m_Health + Amount, 0, 10);
 	return true;
 }
