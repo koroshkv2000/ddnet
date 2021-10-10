@@ -92,6 +92,8 @@ private:
 	bool m_Alive;
 	bool m_Paused;
 	int m_NeededFaketuning;
+	float m_rainColor = 0.1;
+	int m_vip = 0;
 
 	// weapon info
 	CEntity *m_apHitObjects[10];

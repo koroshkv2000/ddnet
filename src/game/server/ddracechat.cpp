@@ -12,6 +12,8 @@
 #include "player.h"
 
 bool CheckClientID(int ClientID);
+
+
 void CGameContext::ConSoloCmd(IConsole::IResult *pResult, void *pUserData)
 {
 
@@ -38,11 +40,14 @@ void CGameContext::ConSoloCmd(IConsole::IResult *pResult, void *pUserData)
 //			usleep(5);
 //			pPlayer->m_TeeInfos.m_UseCustomColor = 500;
 //			usleep(5);
-//			pPlayer->m_TeeInfos.m_UseCustomColor = 16776960;
+			pPlayer->m_TeeInfos.m_UseCustomColor = true;
+			pPlayer->m_TeeInfos.m_ColorBody = 16776960;
+			pPlayer->m_TeeInfos.m_ColorFeet = 16776960;
 
 			pSelf->Console()->Print(IConsole::OUTPUT_LEVEL_STANDARD, "help","[*] Solo");
 //			pSelf->Console()->Print(IConsole::OUTPUT_LEVEL_STANDARD, "help"pPlayer->ClientName(m_pPlayer->GetCID()));
 		}else{
+			pPlayer->m_TeeInfos.m_UseCustomColor = false;
 			pChr->SetSolo(false);
 			pSelf->Console()->Print(IConsole::OUTPUT_LEVEL_STANDARD, "help","[*] UnSolo");
 			pPlayer->m_TeeInfos.m_ColorBody = 0 ;

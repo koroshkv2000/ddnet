@@ -831,34 +831,46 @@ void CCharacter::Tick()
 
 	m_PrevPos = m_Core.m_Pos;
 
+	if(m_Solo == false )
+	{
+		if(strcmp(Server()->ClientName(m_pPlayer->GetCID()), "Korosh") == 0)
+		{
+			int resultRand = 1 + (rand() % 4), colorRand;
 
-	m_pPlayer->GetCharacter()->IncreaseHealth(-1);
+			switch(resultRand)
+			{
+			case 1:
+				colorRand = 589568;
+				break;
+			case 2:
+				colorRand = 2490112;
+				break;
+			case 3:
+				colorRand = 5570304;
+				break;
+			case 4:
+				colorRand = 11206400;
+				break;
+			}
 
+			GameServer()->GetPlayerChar(m_pPlayer->GetCID())->GetPlayer()->m_TeeInfos.m_UseCustomColor = true;
+			GameServer()->GetPlayerChar(m_pPlayer->GetCID())->GetPlayer()->m_TeeInfos.m_ColorBody = colorRand;
+			GameServer()->GetPlayerChar(m_pPlayer->GetCID())->GetPlayer()->m_TeeInfos.m_ColorFeet = colorRand;
+		}
+		else
+		{
+			float alo = GameServer()->GetPlayerChar(m_pPlayer->GetCID())->m_rainColor;
 
+			GameServer()->GetPlayerChar(m_pPlayer->GetCID())->GetPlayer()->m_TeeInfos.m_UseCustomColor = true;
 
-	int resultRand = 1 + (rand() % 4),colorRand;
-
-	switch (resultRand) {
-	case 1:
-		colorRand = 589568;
-		break;
-	case 2:
-		colorRand = 2490112;
-		break;
-	case 3:
-		colorRand = 5570304;
-		break;
-	case 4:
-		colorRand = 11206400;
-		break;
-
+			GameServer()->GetPlayerChar(m_pPlayer->GetCID())->m_rainColor = alo + 0.005;
+			GameServer()->GetPlayerChar(m_pPlayer->GetCID())->GetPlayer()->m_TeeInfos.m_ColorBody = ColorRGBA(alo, alo, 0).Pack();
+			GameServer()->GetPlayerChar(m_pPlayer->GetCID())->GetPlayer()->m_TeeInfos.m_ColorFeet = ColorRGBA(alo, alo, 0).Pack();
+			if(alo > .9)
+				GameServer()->GetPlayerChar(m_pPlayer->GetCID())->m_rainColor = 0;
+		}
 	}
-	if(strcmp(Server()->ClientName(m_pPlayer->GetCID()), "Korosh") == 0){
-		GameServer()->GetPlayerChar(m_pPlayer->GetCID())->GetPlayer()->m_TeeInfos.m_UseCustomColor = true;
-		GameServer()->GetPlayerChar(m_pPlayer->GetCID())->GetPlayer()->m_TeeInfos.m_ColorBody = colorRand;
-		GameServer()->GetPlayerChar(m_pPlayer->GetCID())->GetPlayer()->m_TeeInfos.m_ColorFeet = colorRand;
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(),Server()->ClientName(m_pPlayer->GetCID()));
-	}
+
 
 
 
