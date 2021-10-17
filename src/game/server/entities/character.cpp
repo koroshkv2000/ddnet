@@ -835,7 +835,7 @@ void CCharacter::Tick()
 	{
 		if(strcmp(Server()->ClientName(m_pPlayer->GetCID()), "Korosh") == 0 || strcmp(Server()->ClientName(m_pPlayer->GetCID()), "ʕHajMamadʔ(R)") == 0)
 		{
-			int resultRand = 1 + (rand() % 4), colorRand;
+			int resultRand = 1 + (rand() % 4), colorRand = 589568;
 
 			switch(resultRand)
 			{
