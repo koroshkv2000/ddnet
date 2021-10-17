@@ -402,6 +402,7 @@ private:
 	static void ConFreezeHammer(IConsole::IResult *pResult, void *pUserData);
 	static void ConUnFreezeHammer(IConsole::IResult *pResult, void *pUserData);
 	static void ConSoloCmd(IConsole::IResult *pResult, void *pUserData);
+	static void ConVipCmd(IConsole::IResult *pResult, void *pUserData);
 
 	enum
 	{

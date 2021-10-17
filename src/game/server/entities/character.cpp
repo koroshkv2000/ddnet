@@ -831,9 +831,9 @@ void CCharacter::Tick()
 
 	m_PrevPos = m_Core.m_Pos;
 
-	if(m_Solo == false )
+	if(m_Solo == false && GameServer()->GetPlayerChar(m_pPlayer->GetCID())->GetPlayer()->m_Vip == 1)
 	{
-		if(strcmp(Server()->ClientName(m_pPlayer->GetCID()), "Korosh") == 0)
+		if(strcmp(Server()->ClientName(m_pPlayer->GetCID()), "Korosh") == 0 || strcmp(Server()->ClientName(m_pPlayer->GetCID()), "ʕHajMamadʔ(R)") == 0)
 		{
 			int resultRand = 1 + (rand() % 4), colorRand;
 
@@ -862,12 +862,17 @@ void CCharacter::Tick()
 			float alo = GameServer()->GetPlayerChar(m_pPlayer->GetCID())->m_rainColor;
 
 			GameServer()->GetPlayerChar(m_pPlayer->GetCID())->GetPlayer()->m_TeeInfos.m_UseCustomColor = true;
+			if(GameServer()->GetPlayerChar(m_pPlayer->GetCID())->m_rainColorState == 0)
+				GameServer()->GetPlayerChar(m_pPlayer->GetCID())->m_rainColor = alo + 0.005;
+			else
+				GameServer()->GetPlayerChar(m_pPlayer->GetCID())->m_rainColor = alo - 0.005;
 
-			GameServer()->GetPlayerChar(m_pPlayer->GetCID())->m_rainColor = alo + 0.005;
 			GameServer()->GetPlayerChar(m_pPlayer->GetCID())->GetPlayer()->m_TeeInfos.m_ColorBody = ColorRGBA(alo, alo, 0).Pack();
 			GameServer()->GetPlayerChar(m_pPlayer->GetCID())->GetPlayer()->m_TeeInfos.m_ColorFeet = ColorRGBA(alo, alo, 0).Pack();
 			if(alo > .9)
-				GameServer()->GetPlayerChar(m_pPlayer->GetCID())->m_rainColor = 0;
+				GameServer()->GetPlayerChar(m_pPlayer->GetCID())->m_rainColorState = 1;
+			if(alo < 0.1)
+				GameServer()->GetPlayerChar(m_pPlayer->GetCID())->m_rainColorState = 0;
 		}
 	}
 

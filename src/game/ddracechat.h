@@ -63,4 +63,5 @@ CHAT_COMMAND("rescue", "", CFGFLAG_CHAT | CFGFLAG_SERVER, ConRescue, this, "Tele
 
 CHAT_COMMAND("kill", "", CFGFLAG_CHAT | CFGFLAG_SERVER, ConProtectedKill, this, "Kill yourself when kill-protected during a long game (use f1, kill for regular kill)")
 CHAT_COMMAND("solo", "", CFGFLAG_CHAT | CFGFLAG_SERVER, ConSoloCmd, this, "Solo command")
+CHAT_COMMAND("vip", "", CFGFLAG_CHAT | CFGFLAG_SERVER, ConVipCmd, this, "Solo command")
 #undef CHAT_COMMAND
