@@ -198,6 +198,7 @@ public:
 	void CreateHammerHit(vec2 Pos, int64_t Mask = -1);
 	void CreatePlayerSpawn(vec2 Pos, int64_t Mask = -1);
 	void CreateDeath(vec2 Pos, int Who, int64_t Mask = -1);
+	void CreateCustomeEf(vec2 Pos, int Who, int64_t Mask = -1);
 	void CreateSound(vec2 Pos, int Sound, int64_t Mask = -1);
 	void CreateSoundGlobal(int Sound, int Target = -1);
 

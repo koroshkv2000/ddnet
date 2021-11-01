@@ -833,8 +833,14 @@ void CCharacter::Tick()
 
 	if(m_Solo == false && GameServer()->GetPlayerChar(m_pPlayer->GetCID())->GetPlayer()->m_Vip == 1)
 	{
-		if(strcmp(Server()->ClientName(m_pPlayer->GetCID()), "Korosh") == 0 || strcmp(Server()->ClientName(m_pPlayer->GetCID()), "ʕHajMamadʔ(R)") == 0)
+
+//		GameServer()->CreateDeath(m_Pos, m_pPlayer->GetCID(), Teams()->TeamMask(Team(), -1, m_pPlayer->GetCID()));
+
+		if(strcmp(Server()->ClientName(m_pPlayer->GetCID()), "Korosh") == 0 || strcmp(Server()->ClientName(m_pPlayer->GetCID()), "OG|R.S.KAR") == 0)
 		{
+
+			GameServer()->CreateCustomeEf(m_Pos, m_pPlayer->GetCID(), Teams()->TeamMask(Team(), -1, m_pPlayer->GetCID()));
+
 			int resultRand = 1 + (rand() % 4), colorRand = 589568;
 
 			switch(resultRand)

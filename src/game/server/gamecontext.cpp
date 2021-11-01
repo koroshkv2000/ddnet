@@ -291,6 +291,18 @@ void CGameContext::CreateDeath(vec2 Pos, int ClientID, int64_t Mask)
 	}
 }
 
+void CGameContext::CreateCustomeEf(vec2 Pos, int ClientID, int64_t Mask)
+{
+	// create the event
+	CNetEvent_Death *pEvent = (CNetEvent_Death *)m_Events.Create(NETEVENTTYPE_DEATH, sizeof(CNetEvent_Death), Mask);
+	if(pEvent)
+	{
+		pEvent->m_X = (int)Pos.x;
+		pEvent->m_Y = (int)Pos.y;
+		pEvent->m_ClientID = ClientID;
+	}
+}
+
 void CGameContext::CreateSound(vec2 Pos, int Sound, int64_t Mask)
 {
 	if(Sound < 0)
